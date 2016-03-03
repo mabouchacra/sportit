@@ -2,6 +2,7 @@ package com.sportit.configuration;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.extras.codecs.jdk8.LocalDateCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,8 @@ public class CassandraConfiguration {
 
         String clusterAddress= environment.getProperty("cassandra.cluster.address");
         Cluster cluster = Cluster.builder().addContactPoint(clusterAddress).build();
+
+        cluster.getConfiguration().getCodecRegistry().register(LocalDateCodec.instance);
 
         LOGGER.info("Cassandra cluster connected to {}", cluster.getClusterName());
         return cluster;
