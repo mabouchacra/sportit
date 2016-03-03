@@ -1,10 +1,13 @@
 package com.sportit.repository;
 
+import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.sportit.model.Auteur;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -13,8 +16,8 @@ import java.util.List;
 /**
  * Repository Cassandra pour l'entité Auteur.
  *
- * Created by marc on 02/03/16.
  */
+@Repository
 public class AuteurRepository {
 
     @Inject

@@ -1,8 +1,8 @@
 package com.sportit.model;
 
+import com.datastax.driver.mapping.annotations.PartitionKey;
+import com.datastax.driver.mapping.annotations.Table;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.data.cassandra.mapping.PrimaryKey;
-import org.springframework.data.cassandra.mapping.Table;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,10 +13,10 @@ import java.time.LocalDate;
  *
  * Created by marc on 02/03/16.
  */
-@Table(value = "auteur")
+@Table(name = "auteur")
 public class Auteur implements Serializable {
 
-    @PrimaryKey
+    @PartitionKey
     @Email
     @NotNull
     private String email;
