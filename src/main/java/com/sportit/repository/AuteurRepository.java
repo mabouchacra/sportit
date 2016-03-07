@@ -56,7 +56,7 @@ public class AuteurRepository {
         return auteurs;
     }
 
-    public void save(Auteur auteur){
+    public Auteur save(Auteur auteur){
 
         this.session.execute(this.insertAuteurStmt.bind()
                 .setString("email", auteur.getEmail())
@@ -64,6 +64,7 @@ public class AuteurRepository {
                 .setString("nom", auteur.getNom())
                 .setTimestamp("creation_date", new Date()));
 
+        return auteur;
     }
 
     public Optional<Auteur> findByEmail(String email){

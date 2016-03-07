@@ -27,7 +27,6 @@ public class Auteur implements Serializable {
     @NotNull
     private String nom;
 
-    @NotNull
     private LocalDate creationDate;
 
     public LocalDate getCreationDate() {

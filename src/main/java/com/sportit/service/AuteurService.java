@@ -18,16 +18,22 @@ public class AuteurService {
     private AuteurRepository auteurRepository;
 
     public List<Auteur> findAll(){
-
         return this.auteurRepository.findALl();
     }
 
     public Optional<Auteur> findByEmail(String email){
-
         if(email == null){
             throw new IllegalArgumentException("L'email est obligatoire.");
         }
 
         return this.auteurRepository.findByEmail(email);
+    }
+
+    public Auteur createAuteur(Auteur auteur){
+        if(auteur == null){
+            throw new IllegalArgumentException("L'auteur est obligatoire.");
+        }
+
+        return this.auteurRepository.save(auteur);
     }
 }
