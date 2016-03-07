@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service to manage Auteur entity
@@ -19,5 +20,14 @@ public class AuteurService {
     public List<Auteur> findAll(){
 
         return this.auteurRepository.findALl();
+    }
+
+    public Optional<Auteur> findByEmail(String email){
+
+        if(email == null){
+            throw new IllegalArgumentException("L'email est obligatoire.");
+        }
+
+        return this.auteurRepository.findByEmail(email);
     }
 }

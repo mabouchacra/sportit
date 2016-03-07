@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository Cassandra pour l'entité Auteur.
@@ -32,6 +33,8 @@ public class AuteurRepository {
 
     private PreparedStatement findAllAuteurStmt;
 
+    private PreparedStatement findByEmailStmt;
+
     @PostConstruct
     private void init(){
 
@@ -41,8 +44,10 @@ public class AuteurRepository {
         //pre-load statements
         this.findAllAuteurStmt = this.session.prepare("SELECT * from auteur");
 
-        this.insertAuteurStmt = this.session.prepare("insert into insert into auteur(email, prenom, nom, creation_date) values" +
+        this.insertAuteurStmt = this.session.prepare("insert into auteur(email, prenom, nom, creation_date) values" +
                 " (:email, :prenom, :nom, :creation_date)");
+
+        this.findByEmailStmt = this.session.prepare("select * from auteur where email = :email");
     }
 
     public List<Auteur> findALl(){
@@ -59,5 +64,10 @@ public class AuteurRepository {
                 .setString("nom", auteur.getNom())
                 .setTimestamp("creation_date", new Date()));
 
+    }
+
+    public Optional<Auteur> findByEmail(String email){
+
+        return Optional.ofNullable(this.mapper.map(this.session.execute(this.findByEmailStmt.bind().setString("email", email))).one());
     }
 }

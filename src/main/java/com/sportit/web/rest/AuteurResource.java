@@ -5,9 +5,7 @@ import com.sportit.service.AuteurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -25,9 +23,25 @@ public class AuteurResource {
     /**
      * GET /auteur -> get all user
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllAuteur(){
         List<Auteur> auteurs = this.auteurService.findAll();
         return new ResponseEntity(auteurs, HttpStatus.OK);
+    }
+
+    /**
+     * POST /auteur -> save a new Auteur.
+     * If Email already exist, throw bad request
+     */
+    public ResponseEntity saveAuteur(Auteur auteur){
+        return null;
+    }
+
+    /**
+     * GET /auteur/Search?email=some_email -> Return user by email
+     */
+    @RequestMapping(value="/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getByEmail(@RequestParam("email") String email){
+        return this.auteurService.findByEmail(email).map(auteur -> new ResponseEntity(auteur, HttpStatus.OK)).orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 }
